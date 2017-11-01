@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<!--suppress HtmlUnknownTarget, HtmlUnknownTarget, HtmlUnknownTarget -->
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    {% block title %}<title>AskVenger</title>{% endblock %}
+    <!-- Bootstrap -->
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!--<link href="{% static 'my.css' %}" rel="stylesheet">-->
+  </head>
+
+  {%block all%}
+  <body>
+    {% block navbar %}
+    <nav class="navbar navbar-inverse " role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand">Ask Venger</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a>Home</a></li>
+            <li><a>About</a></li>
+            <li><a>Contact</a></li>
+          </ul>
+          {%block user_bar%}
+          {%if request.user.is_authenticated  %}
+          <ul style="margin: 5px" class="nav navbar-right">
+            <a class="nav" href="#">{{ request.user.last_name }} {{ request.user.first_name }} <a href="{% url 'logout' %}?continue={{ request.path }}" class="navbar-link">log out</a> </a>
+          </ul>
+          <ul class="nav navbar-right">
+            <div style="margin: 7px">
+                <img src="{% static 'default_ava.jpg' %}" width="36" height="36">
+            </div>
+          </ul>
+          {% else %}
+          <ul style="margin: 5px" class="nav navbar-right">
+              <a class="nav">Log in <a>Register</a> </a>
+          </ul>
+          {% endif %}
+          {% endblock%}
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    {%endblock%}
+
+    <div class="container">
+
+      <div class="row row-offcanvas row-offcanvas-right">
+
+        {% block content %}
+        <div class="col-xs-12 col-sm-9">
+          <div class="row-offcanvas">
+            <div align="right">
+              <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-success">Ask!</button>
+            </div>
+          </div>
+        </div>
+        {% endblock %}
+
+        <div class="col-xs-6 col-sm-3" id="sidebar">
+          <div class="">
+            <div class="input-group">
+              <input type="text" class="form-control">
+              <span class="input-group-btn">
+                <button style="padding-top: 7px"class="btn btn-default" type="button">
+                  <span class="glyphicon glyphicon-search"></span>
+                </button>
+              </span>
+            </div><!-- /input-group -->
+          </div><!-- /.col-lg-6 -->
+          <br>
+          {% block tags %}
+          <div class="tags_block jumbotron">
+            <a style="color: peru; font-size: 21px;">JavaScript </a>
+            <a style="color: cadetblue; font-size: 18px;">Python </a>
+            <a style="color: black; font-size: 23px;">Java </a>
+            <a style="color: brown; font-size: 25px;">MySQL </a>
+            <a style="color: cadetblue; font-size: 18px;">CSS </a>
+            <a style="color: indianred; font-size: 29px;">Android </a>
+            <a style="color: slateblue; font-size: 20px;">Jquery </a>
+            <a style="color: seagreen; font-size: 17px;">PHP </a>
+            <a style="color: orange; font-size: 23px;">HTML </a>
+          </div>
+          <div>
+            <h2 style="color: brown; ">Best members</h2>
+            <a style="font-size: 18px;">Fermer</a><br>
+            <a style="font-size: 18px;">CoolerOff</a><br>
+            <a style="font-size: 18px;">Spaisechlin</a><br>
+            <a style="font-size: 18px;">BigLegs</a><br>
+            <a style="font-size: 18px;">Who</a><br>
+            <a style="font-size: 18px;">AnyBody</a><br>
+          </div>
+        {% endblock %}
+
+        </div><!--/.sidebar-offcanvas-->
+      </div><!--/row-->
+    </div><!--/.container-->
+    {%endblock%}
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+  </body>
+
+</html>
