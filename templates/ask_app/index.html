@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for question in questions %}
+
+        {% include 'ask_app/partials/_question.html' %}
+
+    {% endfor %}
+
+    <ul class="pagination justify-content-center">
+
+        <li class="page-item"><a class="page-link" href="#">Туда</a></li>
+
+        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+
+        <li class="page-item"><a class="page-link" href="#">...</a></li>
+
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+        <li class="page-item"><a class="page-link" href="#">Сюда</a></li>
+
+    </ul>
+{% endblock %}

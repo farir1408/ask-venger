@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load staticfiles %}
+{% load static %}
 <!--suppress HtmlUnknownTarget, HtmlUnknownTarget, HtmlUnknownTarget -->
 
 <html lang="en">
@@ -35,18 +35,34 @@
             <li><a>Contact</a></li>
           </ul>
           {%block user_bar%}
-          {%if request.user.is_authenticated  %}
-          <ul style="margin: 5px" class="nav navbar-right">
-            <a class="nav" href="#">{{ request.user.last_name }} {{ request.user.first_name }} <a href="{% url 'logout' %}?continue={{ request.path }}" class="navbar-link">log out</a> </a>
+          {%if not request.user.is_authenticated  %}
+          <ul style="margin: 5px" class="nav navbar-nav navbar-right">
+            <li>
+              <a href="#" class="navbar-link">Настройки</a>
+            </li>
+            <li>
+              <a href="#" class="navbar-link">Выход</a>
+            </li>
           </ul>
           <ul class="nav navbar-right">
             <div style="margin: 7px">
-                <img src="{% static 'default_ava.jpg' %}" width="36" height="36">
+                <img src="{% static 'ava.jpg' %}" width="36" height="36">
             </div>
           </ul>
           {% else %}
-          <ul style="margin: 5px" class="nav navbar-right">
-              <a class="nav">Log in <a>Register</a> </a>
+          <ul class="nav navbar-nav navbar-right">
+
+            <li class="nav-item">
+
+              <a>Login</a>
+
+            </li>
+            <li class="nav-item">
+
+              <a>Register</a>
+
+            </li>
+
           </ul>
           {% endif %}
           {% endblock%}
@@ -57,29 +73,40 @@
 
     <div class="container">
 
-      <div class="row row-offcanvas row-offcanvas-right">
+      <div class="row">
 
-        {% block content %}
-        <div class="col-xs-12 col-sm-9">
-          <div class="row-offcanvas">
-            <div align="right">
-              <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-success">Ask!</button>
-            </div>
-          </div>
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+          {% block content %}
+          {% endblock %}
         </div>
-        {% endblock %}
 
-        <div class="col-xs-6 col-sm-3" id="sidebar">
-          <div class="">
-            <div class="input-group">
-              <input type="text" class="form-control">
-              <span class="input-group-btn">
-                <button style="padding-top: 7px"class="btn btn-default" type="button">
-                  <span class="glyphicon glyphicon-search"></span>
-                </button>
-              </span>
-            </div><!-- /input-group -->
-          </div><!-- /.col-lg-6 -->
+        <div class="col-xs-12 col-sm-9 col-md-3 col-lg-3" id="sidebar">
+
+          <div class="row">
+
+            <div class="col-md-3">
+
+              <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-success">Ask!</button>
+
+            </div>
+
+            <div class="col-md-9">
+
+              <div class="input-group">
+                <input type="text" class="form-control">
+
+                <span class="input-group-btn">
+                  <button style="padding-top: 7px"class="btn btn-default" type="button">
+                    <span class="glyphicon glyphicon-search"></span>
+                  </button>
+                </span><!-- /input-group -->
+
+              </div><!-- /.col-lg-6 -->
+
+            </div>
+
+          </div>
+
           <br>
           {% block tags %}
           <div class="tags_block jumbotron">
