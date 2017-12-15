@@ -16,3 +16,5 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "AskVenger.settings")
 
 application = get_wsgi_application()
 application = DjangoWhiteNoise(application)
+
+# gunicorn -c ./config/gunicorn AskVenger.wsgi

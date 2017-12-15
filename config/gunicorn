@@ -1,4 +1,4 @@
-bind = '127.0.0.1:8081'
+bind = '127.0.0.1:8082'
 workers = 3
 timeout = 10
 chdir = '/home/oleg/web/ask-venger/'

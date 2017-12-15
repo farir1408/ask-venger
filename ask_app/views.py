@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 def base(request):
@@ -29,27 +30,42 @@ def params(request):
 
     return HttpResponse('<br>'.join(result).encode('u8'))
 
+def paginate(object_list, request):
+    num_on_page = 4
+    paginator = Paginator(object_list, num_on_page)
+    print(paginator.num_pages)
+    page = request.GET.get('page')
+
+    try:
+        new_questions = paginator.page(page)
+
+    except PageNotAnInteger:
+        new_questions = paginator.page(1)
+
+    except EmptyPage:
+        new_questions = paginator.page(paginator.num_pages)
+
+    return new_questions
+
 def index(request):
-    context = {
-        'questions': [
-            {
-                'text': 'Какого цвета кулер1?',
+    import random
+    context = {'questions':[]}
+    question = {
+                'text': 'Какого цвета кулер',
                 'user': 'GayOrgiy',
                 'theme': 'Research',
             },
-            {
-                'text': 'Какого цвета кулер2?',
-                'user': 'GayOrgiy',
-                'theme': 'Research',
-            },
-            {
-                'text': 'Какого цвета кулер3?',
-                'user': 'GayOrgiy',
-                'theme': 'Research',
-            },
-        ]
-    }
-    return render(request, 'ask_app/index.html', context=context)
+
+    for i in range(10):
+        context['questions'].append(question)
+
+    # print(context['questions'])
+
+    questions = paginate(context['questions'], request)
+
+    # print(context['questions'])
+
+    return render(request, 'ask_app/index.html', {'questions':questions})
 
 
 def question(request):
