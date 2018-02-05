@@ -1,0 +1,9 @@
+{%extends 'ask_app/index.html'%}
+{% load staticfiles %}
+
+{%block tabs%}
+<ul class="nav nav-pills col-xs-11 col-sm-11" >
+    <li ><a href="{%url 'index' %}">New</a></li>
+    <li class="active" style="padding-left:3px"><a href="{%url 'hot' %}">Popular</a></li>
+</ul>
+{%endblock%}

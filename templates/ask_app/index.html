@@ -1,25 +1,49 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
-{% block content %}
+{%block content%}
+<div class="col-xs-12 col-sm-12">
+    <div class="row-offcanvas">
+        {%block tabs%}
+        <ul class="nav nav-pills col-xs-11 col-sm-11">
+        <li class="active"><a href="{%url 'index' %}">New</a></li>
+        <li style="padding-left:3px"><a href="{%url 'hot' %}">Popular</a></li>
+        </ul>
+        {%endblock%}
+    </div>
+
+    <br>
+    <br>
+    <br>
     {% for question in questions %}
+    <div class="jumbotron" id="sidebar">
+        <div class="row">
+            <div class="col-xs-2 col-sm-2">
+                <div class="row row-offcanvas">
+                    <div class="col-xs-3 col-sm-3">
+                        <div><a style="font-size: 20px; color:grey" href="#" class="glyphicon glyphicon-triangle-top"></a></div>
+                        <div align=center style="font-size: 16px; color:grey" >{%block likes%} {{question.likes}} {%endblock%}</div>
+                        <div><a style="font-size: 20px; color:grey" href="#" class="glyphicon glyphicon-triangle-bottom"></a></div>
+                    </div>
+                    <div class="col-xs-9 col-sm-9">
+                        <img src="{% static 'ava.jpg' %}" width="74" height="74">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-10 col-sm-10">
+                <a href = "{%url 'question' question.id%}"> <h2 class=title-question>{{question.title}}</h2></a>
+                <p class=body-question>{{question.text}}</p>
+            </div>
+        </div>
 
-        {% include 'ask_app/partials/_question.html' %}
-
-    {% endfor %}
-
-    <ul class="pagination justify-content-center">
-
-        <li class="page-item"><a class="page-link" href="#">Туда</a></li>
-
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-
-        <li class="page-item"><a class="page-link" href="#">...</a></li>
-
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-
-        <li class="page-item"><a class="page-link" href="#">Сюда</a></li>
-
-    </ul>
-{% endblock %}
+        <div class="row-fluid">
+            <p2>
+                <i class="glyphicon glyphicon-user"></i> by <a href="#">{{question.author}}</a>
+                |  <i class="glyphicon glyphicon-calendar"></i> {{question.date}}
+            </p2>
+        </div>
+    </div>
+    {% endfor%}
+    {% include 'ask_app/paginate.html' with paginated=questions %}
+</div>
+{%endblock%}
